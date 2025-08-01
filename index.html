@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sarqyt Admin</title>
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --secondary: #f1f3f4;
+      --text: #202124;
+      --accent: #e8f0fe;
+      --error: #d93025;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --border-radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e8ecef 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 700px;
+      width: 100%;
+      background: #fff;
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+
+    input, button {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    input {
+      border: 1px solid #dadce0;
+      background: #f8f9fa;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+    }
+
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    button:hover {
+      background: #1557b0;
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    pre {
+      background: #f1f3f4;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      margin: 1rem 0;
+    }
+
+    .store-card {
+      background: var(--accent);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .store-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .store-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .store-card small {
+      display: block;
+      color: #5f6368;
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .store-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-top: 0.75rem;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      input, button {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Login -->
+  <div class="container" id="loginPage">
+    <h2>Admin Login</h2>
+    <input type="text" id="loginUsername" placeholder="Username" />
+    <input type="password" id="loginPassword" placeholder="Password" />
+    <button onclick="handleLogin()">Login</button>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="container hidden" id="dashboardPage">
+    <h2>Dashboard</h2>
+    <button onclick="showAddStore()">Add Store</button>
+    <button onclick="viewAllStores()">View All Stores</button>
+    <button onclick="showStoreLookup('view')">View Store</button>
+    <button onclick="showStoreLookup('edit')">Edit Store</button>
+  </div>
+
+  <!-- View All Stores -->
+  <div class="container hidden" id="viewAllStoresPage">
+    <h2>All Stores</h2>
+    <div id="storesList"></div>
+    <button onclick="goBackToDashboard()">Back to Dashboard</button>
+  </div>
+
+  <!-- Add Store -->
+  <div class="container hidden" id="addStorePage">
+    <h2>Add Store</h2>
+    <input type="text" id="name" placeholder="Store Name" />
+    <input type="text" id="address" placeholder="Address" />
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password_hash" placeholder="Password" />
+    <input type="text" id="contact_info" placeholder="Contact Info" />
+    <input type="text" id="coordinates_lat" placeholder="Latitude" />
+    <input type="text" id="coordinates_lon" placeholder="Longitude" />
+    <button onclick="submitStore()">Create Store</button>
+    <button onclick="goBackToDashboard()">Back</button>
+  </div>
+
+  <!-- Store Lookup -->
+  <div class="container hidden" id="lookupPage">
+    <h2 id="lookupTitle">Store Lookup</h2>
+    <input type="text" id="lookupUsername" placeholder="Enter Store Username" />
+    <button onclick="submitLookup()">Submit</button>
+    <button onclick="goBackToDashboard()">Back</button>
+    <div id="lookupResult"></div>
+  </div>
+
+  <!-- Edit Store -->
+  <div class="container hidden" id="editStorePage">
+    <h2>Edit Store</h2>
+    <input type="text" id="edit_name" placeholder="New Store Name" />
+    <input type="text" id="edit_address" placeholder="New Address" />
+    <input type="text" id="edit_contact_info" placeholder="New Contact Info" />
+    <button onclick="submitEdit()">Save Changes</button>
+    <button onclick="goBackToDashboard()">Back</button>
+  </div>
+
+  <script>
+    const API_URL = 'https://sarqyt.onrender.com/api';
+
+    let lookupMode = '';
+    let editUsername = '';
+
+    function handleLogin() {
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+
+      fetch(`${API_URL}/admin/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      }).then(res => {
+        if (res.ok) {
+          document.getElementById('loginPage').classList.add('hidden');
+          document.getElementById('dashboardPage').classList.remove('hidden');
+        } else {
+          alert('Login failed');
+        }
+      }).catch(err => alert('Error logging in: ' + err.message));
+    }
+
+    function goBackToDashboard() {
+      document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
+      document.getElementById('dashboardPage').classList.remove('hidden');
+    }
+
+    function showAddStore() {
+      document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
+      document.getElementById('addStorePage').classList.remove('hidden');
+    }
+
+    function submitStore() {
+      const store = {
+        name: document.getElementById('name').value,
+        address: document.getElementById('address').value,
+        username: document.getElementById('username').value,
+        password_hash: document.getElementById('password_hash').value,
+        contact_info: document.getElementById('contact_info').value,
+        coordinates_lat: parseFloat(document.getElementById('coordinates_lat').value),
+        coordinates_lon: parseFloat(document.getElementById('coordinates_lon').value),
+      };
+
+      fetch(`${API_URL}/admin/create-store`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(store)
+      }).then(res => res.json())
+        .then(data => {
+          if (data.store) {
+            alert('Store created!');
+            goBackToDashboard();
+          } else {
+            alert('Error: ' + (data.error || 'Unknown error'));
+          }
+        }).catch(err => alert('Error creating store: ' + err.message));
+    }
+
+    function viewAllStores() {
+      fetch(`${API_URL}/admin/stores`, { method: 'GET' })
+        .then(res => {
+          if (!res.ok) return res.text().then(text => { throw new Error(`HTTP ${res.status}: ${text}`); });
+          return res.json();
+        })
+        .then(data => {
+          const stores = data.stores || data;
+          const container = document.getElementById('storesList');
+          container.innerHTML = '';
+
+          if (!stores.length) {
+            container.innerHTML = '<p>No stores found.</p>';
+          } else {
+            stores.forEach(store => {
+              const card = document.createElement('div');
+              card.className = 'store-card';
+              card.innerHTML = `
+                <h3>${store.name}</h3>
+                <small><strong>Username:</strong> ${store.username}</small><br />
+                <small><strong>Address:</strong> ${store.address}</small><br />
+                <small><strong>Contact:</strong> ${store.contact_info}</small><br />
+                <small><strong>Coordinates:</strong> ${store.coordinates_lat}, ${store.coordinates_lon}</small><br />
+                <small><strong>Created:</strong> ${new Date(store.created_at).toLocaleString()}</small><br />
+                ${store.image_urls ? `<img class="store-image" src="${store.image_urls}" alt="${store.name} logo">` : ''}
+              `;
+              container.appendChild(card);
+            });
+          }
+
+          document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
+          document.getElementById('viewAllStoresPage').classList.remove('hidden');
+        })
+        .catch(err => {
+          console.error('Fetch error:', err);
+          alert('Error fetching stores: ' + err.message);
+        });
+    }
+
+    function showStoreLookup(mode) {
+      lookupMode = mode;
+      document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
+      document.getElementById('lookupPage').classList.remove('hidden');
+      document.getElementById('lookupTitle').innerText = mode === 'edit' ? 'Edit Store' : 'View Store';
+    }
+
+    function submitLookup() {
+      const username = document.getElementById('lookupUsername').value;
+      fetch(`${API_URL}/admin/stores/${username}`)
+        .then(res => {
+          if (!res.ok) return res.text().then(text => { throw new Error(`HTTP ${res.status}: ${text}`); });
+          return res.json();
+        })
+        .then(data => {
+          if (data.error) {
+            alert(data.error);
+            return;
+          }
+          if (lookupMode === 'view') {
+            const store = data.store;
+            const result = document.getElementById('lookupResult');
+            result.innerHTML = `
+              <div class="store-card">
+                <h3>${store.name}</h3>
+                <small><strong>Username:</strong> ${store.username}</small><br />
+                <small><strong>Address:</strong> ${store.address}</small><br />
+                <small><strong>Contact:</strong> ${store.contact_info}</small><br />
+                <small><strong>Coordinates:</strong> ${store.coordinates_lat}, ${store.coordinates_lon}</small><br />
+                <small><strong>Created:</strong> ${new Date(store.created_at).toLocaleString()}</small><br />
+                ${store.image_urls ? `<img class="store-image" src="${store.image_urls}" alt="${store.name} logo">` : ''}
+              </div>
+            `;
+          } else {
+            editUsername = username;
+            document.getElementById('edit_name').value = data.store.name;
+            document.getElementById('edit_address').value = data.store.address;
+            document.getElementById('edit_contact_info').value = data.store.contact_info;
+            document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
+            document.getElementById('editStorePage').classList.remove('hidden');
+          }
+        })
+        .catch(err => alert('Error fetching store: ' + err.message));
+    }
+
+    function submitEdit() {
+      const body = {
+        name: document.getElementById('edit_name').value,
+        address: document.getElementById('edit_address').value,
+        contact_info: document.getElementById('edit_contact_info').value
+      };
+
+      fetch(`${API_URL}/admin/stores/${editUsername}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      }).then(res => res.json())
+        .then(data => {
+          if (data.store) {
+            alert('Store updated!');
+            goBackToDashboard();
+          } else {
+            alert('Update failed: ' + (data.error || 'Unknown error'));
+          }
+        }).catch(err => alert('Error updating store: ' + err.message));
+    }
+  </script>
+</body>
+</html>
