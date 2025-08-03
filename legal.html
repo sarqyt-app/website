@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Юридическая информация</title>
+  <style>
+    :root {
+      --primary: #2a4ce4;
+      --secondary: #f4f6f8;
+      --text: #1a1c22;
+      --accent: #e0e7ff;
+      --error: #e63946;
+      --shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      --border-radius: 16px;
+      --gradient: linear-gradient(135deg, #6b7280 0%, #1e3a8a 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--gradient);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1.5rem;
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+      background: #fff;
+      padding: 2.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      animation: slideIn 0.4s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: var(--text);
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin: 2rem 0 1rem;
+      color: var(--text);
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      color: #4b5563;
+    }
+
+    .lang-select {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 10px;
+      border: 1px solid var(--primary);
+      background: #fff;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .lang-select:hover {
+      background: var(--accent);
+      border-color: #1e40af;
+    }
+
+    .lang-select:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(42, 76, 228, 0.2);
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 2rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="lang-select">
+    <select id="lang" onchange="switchLang()">
+      <option value="en">English</option>
+      <option value="ru" selected>Русский</option>
+      <option value="kz">Қазақша</option>
+    </select>
+  </div>
+
+  <div class="container" id="content"></div>
+
+  <script>
+    const translations = {
+      en: `
+        <h1>Legal Information</h1>
+        <h2>Terms & Conditions</h2>
+        <p>Welcome to Sarqyt. By accessing or using our mobile application and services, you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree with these Terms, you may not use our services.</p>
+        <p><strong>1. Eligibility</strong><br>You must be at least 18 years old or have the consent of a legal guardian to use Sarqyt. By using the app, you represent and warrant that you meet these eligibility requirements.</p>
+        <p><strong>2. Use of Services</strong><br>Sarqyt connects users with local businesses to purchase surplus food at discounted prices. You agree to use the app solely for personal, non-commercial purposes and in compliance with all applicable laws.</p>
+        <p><strong>3. Orders and Payments</strong><br>All orders placed through Sarqyt are final and non-refundable unless explicitly stated otherwise by the participating business. Payments are processed securely through our third-party payment providers.</p>
+        <p><strong>4. User Conduct</strong><br>You agree not to misuse the app, including but not limited to attempting to access unauthorized areas, interfering with the app’s functionality, or engaging in fraudulent activities.</p>
+        <p><strong>5. Termination</strong><br>We reserve the right to suspend or terminate your access to Sarqyt at our discretion if you violate these Terms or engage in activities that harm the app or its users.</p>
+        <p><strong>6. Limitation of Liability</strong><br>Sarqyt is not liable for any indirect, incidental, or consequential damages arising from your use of the app, including issues with food quality or availability, which are the responsibility of the participating businesses.</p>
+        <p><strong>7. Changes to Terms</strong><br>We may update these Terms from time to time. Continued use of the app after changes constitutes acceptance of the new Terms.</p>
+
+        <h2>Privacy Policy</h2>
+        <p>At Sarqyt, we value your privacy and are committed to protecting your personal information. This Privacy Policy outlines how we collect, use, and safeguard your data.</p>
+        <p><strong>1. Information We Collect</strong><br>We collect personal information such as your name, email address, phone number, payment details, and order history to provide and improve our services. Location data may be collected to suggest nearby businesses.</p>
+        <p><strong>2. Use of Information</strong><br>Your data is used to process orders, provide customer support, improve the app, and send relevant notifications. We may use anonymized data for analytics purposes.</p>
+        <p><strong>3. Data Sharing</strong><br>We do not sell your personal information to third parties. Data may be shared with participating businesses to fulfill orders or with service providers (e.g., payment processors) under strict confidentiality agreements.</p>
+        <p><strong>4. Data Security</strong><br>We implement industry-standard security measures to protect your data. However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.</p>
+        <p><strong>5. Your Rights</strong><br>You have the right to access, update, or delete your personal information. Contact us at <a href="https://sarqyt-app.github.io/website/support">https://sarqyt-app.github.io/website/support</a> to exercise these rights.</p>
+        <p><strong>6. Cookies</strong><br>We use cookies to enhance your experience on our website and app. You can manage cookie preferences through your browser settings.</p>
+        <p><strong>7. Changes to Privacy Policy</strong><br>We may update this Privacy Policy periodically. We will notify you of significant changes via the app or email.</p>
+
+        <h2>Contact</h2>
+        <p>For questions or concerns regarding these Terms or Privacy Policy, please contact us at: <a href="https://sarqyt-app.github.io/website/support">https://sarqyt-app.github.io/website/support</a></p>
+      `,
+      ru: `
+        <h1>Юридическая информация</h1>
+        <h2>Условия и положения</h2>
+        <p>Добро пожаловать в Sarqyt. Используя наше мобильное приложение и услуги, вы соглашаетесь с настоящими Условиями и положениями ("Условия"). Если вы не согласны с этими Условиями, вы не можете использовать наши услуги.</p>
+        <p><strong>1. Право на использование</strong><br>Вам должно быть не менее 18 лет или необходимо согласие законного опекуна для использования Sarqyt. Используя приложение, вы подтверждаете, что соответствуете этим требованиям.</p>
+        <p><strong>2. Использование услуг</strong><br>Sarqyt связывает пользователей с местными предприятиями для покупки излишков продуктов по сниженным ценам. Вы соглашаетесь использовать приложение только в личных, некоммерческих целях и в соответствии с действующим законодательством.</p>
+        <p><strong>3. Заказы и платежи</strong><br>Все заказы, размещенные через Sarqyt, являются окончательными и не подлежат возврату, если иное не указано участвующим предприятием. Платежи обрабатываются безопасно через наших сторонних поставщиков платежных услуг.</p>
+        <p><strong>4. Поведение пользователей</strong><br>Вы соглашаетесь не злоупотреблять приложением, включая, но не ограничиваясь, попытками несанкционированного доступа, вмешательством в функциональность приложения или участием в мошеннической деятельности.</p>
+        <p><strong>5. Прекращение доступа</strong><br>Мы оставляем за собой право приостановить или прекратить ваш доступ к Sarqyt по нашему усмотрению, если вы нарушаете эти Условия или занимаетесь деятельностью, наносящей вред приложению или его пользователям.</p>
+        <p><strong>6. Ограничение ответственности</strong><br>Sarqyt не несет ответственности за косвенные, случайные или последующие убытки, возникающие в результате использования приложения, включая проблемы с качеством или доступностью продуктов, за которые отвечают участвующие предприятия.</p>
+        <p><strong>7. Изменения условий</strong><br>Мы можем периодически обновлять эти Условия. Продолжение использования приложения после изменений означает принятие новых Условий.</p>
+
+        <h2>Политика конфиденциальности</h2>
+        <p>В Sarqyt мы ценим вашу конфиденциальность и стремимся защищать ваши личные данные. Настоящая Политика конфиденциальности описывает, как мы собираем, используем и защищаем ваши данные.</p>
+        <p><strong>1. Сбор информации</strong><br>Мы собираем личные данные, такие как ваше имя, адрес электронной почты, номер телефона, платежные данные и история заказов, для предоставления и улучшения наших услуг. Данные о местоположении могут собираться для предложения ближайших предприятий.</p>
+        <p><strong>2. Использование информации</strong><br>Ваши данные используются для обработки заказов, предоставления поддержки клиентов, улучшения приложения и отправки соответствующих уведомлений. Мы можем использовать анонимизированные данные для аналитики.</p>
+        <p><strong>3. Передача данных</strong><br>Мы не продаем ваши личные данные третьим лицам. Данные могут передаваться участвующим предприятиям для выполнения заказов или поставщикам услуг (например, платежным системам) по строгим соглашениям о конфиденциальности.</p>
+        <p><strong>4. Безопасность данных</strong><br>Мы применяем отраслевые стандарты безопасности для защиты ваших данных. Однако ни один способ передачи данных через интернет не является абсолютно безопасным, и мы не можем гарантировать полную безопасность.</p>
+        <p><strong>5. Ваши права</strong><br>Вы имеете право на доступ, обновление или удаление ваших личных данных. Свяжитесь с нами по адресу <a href="https://sarqyt-app.github.io/website/support">https://sarqyt-app.github.io/website/support</a> для реализации этих прав.</p>
+        <p><strong>6. Cookies</strong><br>Мы используем cookies для улучшения вашего опыта на нашем сайте и в приложении. Вы можете управлять настройками cookies через параметры вашего браузера.</p>
+        <p><strong>7. Изменения политики конфиденциальности</strong><br>Мы можем периодически обновлять эту Политику конфиденциальности. Мы уведомим вас о значительных изменениях через приложение или по электронной почте.</p>
+
+        <h2>Контакты</h2>
+        <p>По вопросам, связанным с настоящими Условиями или Политикой конфиденциальности, обращайтесь по адресу: <a href="https://sarqyt-app.github.io/website/support">https://sarqyt-app.github.io/website/support</a></p>
+      `,
+      kz: `
+        <h1>Құқықтық ақпарат</h1>
+        <h2>Пайдалану шарттары</h2>
+        <p>Sarqyt-қа қош келдіңіз. Біздің мобильді қосымша және қызметтерді пайдалану арқылы сіз осы Пайдалану шарттарымен ("Шарттар") келісесіз. Егер сіз бұл Шарттармен келіспесеңіз, сіз біздің қызметтерді пайдалана алмайсыз.</p>
+        <p><strong>1. Пайдалану құқығы</strong><br>Сіз кем дегенде 18 жаста болуыңыз немесе заңды қамқоршының рұқсаты болуы керек. Қосымшаны пайдалана отырып, сіз осы талаптарға сай екеніңізді растайсыз.</p>
+        <p><strong>2. Қызметтерді пайдалану</strong><br>Sarqyt пайдаланушыларды жергілікті кәсіпорындармен байланыстырып, артық өнімдерді жеңілдікпен сатып алуға мүмкіндік береді. Сіз қосымшаны тек жеке, коммерциялық емес мақсаттарда және барлық қолданыстағы заңдарға сәйкес пайдалануға келісесіз.</p>
+        <p><strong>3. Тапсырыстар мен төлемдер</strong><br>Sarqyt арқылы жасалған барлық тапсырыстар түпкілікті және қайтарылмайды, егер қатысушы кәсіпорын басқаша көрсетпесе. Төлемдер біздің үшінші тарап төлем провайдерлері арқылы қауіпсіз өңделеді.</p>
+        <p><strong>4. Пайдаланушы мінез-құлқы</strong><br>Сіз қосымшаны теріс пайдаланбауға, соның ішінде рұқсат етілмеген аймақтарға кіруге тырысуға, қосымшаның функционалдығына кедергі келтіруге немесе алаяқтық әрекеттерге қатысуға келісесіз.</p>
+        <p><strong>5. Доступты тоқтату</strong><br>Біз осы Шарттарды бұзсаңыз немесе қосымшаға немесе оның пайдаланушыларына зиян келтіретін әрекеттерге қатыссаңыз, сіздің Sarqyt-қа қолжетімділігін тоқтата аламыз немесе тоқтата аламыз.</p>
+        <p><strong>6. Жауапкершілікті шектеу</strong><br>Sarqyt қосымшаны пайдаланудан туындайтын жанама, кездейсоқ немесе салдарлы залалдар үшін, соның ішінде өнім сапасы немесе қолжетімділігі мәселелері үшін жауап бермейді, бұл қатысушы кәсіпорындардың жауапкершілігі.</p>
+        <p><strong>7. Шарттарды өзгерту</strong><br>Біз бұл Шарттарды уақыт өте келе жаңартуымыз мүмкін. Өзгерістерден кейін қосымшаны жалғастыру жаңа Шарттарды қабылдауды білдіреді.</p>
+
+        <h2>Құпиялылық саясаты</h2>
+        <p>Sarqyt-та біз сіздің құпиялылығыңызды бағалаймыз және сіздің жеке ақпаратыңызды қорғауға міндеттіміз. Бұл Құпиялылық саясаты біз сіздің деректеріңізді қалай жинайтынымызды, пайдаланатынымызды және қорғайтынымызды сипаттайды.</p>
+        <p><strong>1. Ақпаратты жинау</strong><br>Біз сіздің атыңыз, электрондық пошта мекенжайы, телефон нөмірі, төлем мәліметтері және тапсырыс тарихы сияқты жеке ақпаратты қызметтерді ұсыну және жақсарту үшін жинаймыз. Жақын маңдағы кәсіпорындарды ұсыну үшін орналасу деректері жиналуы мүмкін.</p>
+        <p><strong>2. Ақпаратты пайдалану</strong><br>Сіздің деректеріңіз тапсырыстарды өңдеу, тұтынушыларға қолдау көрсету, қосымшаны жақсарту және тиісті хабарламалар жіберу үшін пайдаланылады. Біз аналитика үшін анонимизирленген деректерді пайдалана аламыз.</p>
+        <p><strong>3. Деректерді бөлісу</strong><br>Біз сіздің жеке ақпаратыңызды үшінші тараптарға сатпаймыз. Деректер тапсырыстарды орындау үшін қатысушы кәсіпорындармен немесе қатаң құпиялылық келісімдері бойынша қызмет жеткізушілерімен (мысалы, төлем өңдеушілерімен) бөлісілуі мүмкін.</p>
+        <p><strong>4. Деректер қауіпсіздігі</strong><br>Біз сіздің деректеріңізді қорғау үшін салалық стандартты қауіпсіздік шараларын қолданамыз. Дегенмен, интернет арқылы деректерді беру әдісі 100% қауіпсіз емес, және біз абсолютті қауіпсіздікке кепілдік бере алмаймыз.</p>
+        <p><strong>5. Сіздің құқықтарыңыз</strong><br>Сізде жеке ақпаратыңызға қол жеткізу, оны жаңарту немесе жою құқығы бар. Осы құқықтарды жүзеге асыру үшін <a href="https://sarqyt-app.github.io/website/support">https://sarqyt-app.github.io/website/support</a> арқылы бізбен хабарласыңыз.</p>
+        <p><strong>6. Cookies</strong><br>Біз веб-сайт пен қосымшада тәжірибеңізді жақсарту үшін cookies пайдаланамыз. Сіз браузер параметрлері арқылы cookies басқара аласыз.</p>
+        <p><strong>7. Құпиялылық саясатын өзгерту</strong><br>Біз бұл Құпиялылық саясатын мерзімді түрде жаңартуымыз мүмкін. Біз сізді маңызды өзгерістер туралы қосымша немесе электрондық пошта арқылы хабардар етеміз.</p>
+
+        <h2>Байланыс</h2>
+        <p>Осы Шарттарға немесе Құпиялылық саясатына қатысты сұрақтар немесе мәселелер бойынша мына мекенжайға хабарласыңыз: <a href="https://sarqyt-app.github.io/website/support">https://sarqyt-app.github.io/website/support</a></p>
+      `
+    };
+
+    function switchLang() {
+      const lang = document.getElementById('lang').value;
+      document.getElementById('content').innerHTML = translations[lang];
+    }
+
+    switchLang();
+  </script>
+</body>
+</html>

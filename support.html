@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Связаться с нами</title>
+    <style>
+        :root {
+            --primary: #2a4ce4;
+            --secondary: #f4f6f8;
+            --text: #1a1c22;
+            --accent: #e0e7ff;
+            --error: #e63946;
+            --shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            --border-radius: 16px;
+            --gradient: linear-gradient(135deg, #6b7280 0%, #1e3a8a 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gradient);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            animation: slideIn 0.4s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text);
+            position: relative;
+            z-index: 1;
+        }
+
+        label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 500;
+            margin: 0.75rem 0 0.25rem;
+            color: var(--text);
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            border: 1px solid #d1d5db;
+            background: #f9fafb;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(42, 76, 228, 0.2);
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #1e40af;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(42, 76, 228, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid #c3e6cb;
+            margin-top: 1rem;
+        }
+
+        .lang-select {
+            position: absolute;
+            width: 150px;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 10px;
+            border: 1px solid var(--primary);
+            background: #fff;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-select:hover {
+            background: var(--accent);
+            border-color: #1e40af;
+        }
+
+        .lang-select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(42, 76, 228, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 2rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            input,
+            textarea,
+            select,
+            button {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <select id="lang" class="lang-select">
+            <option value="en">us English</option>
+            <option value="ru" selected>🇷🇺 Русский</option>
+            <option value="kz">🇰🇿 Қазақша</option>
+        </select>
+
+        <div id="form-box">
+            <h2 id="title">Связаться с нами</h2>
+
+            <label for="email" id="label-email">Эл. почта</label>
+            <input type="email" id="email" required />
+
+            <label for="category" id="label-category">Категория</label>
+            <select id="category">
+                <option value="general">Общий вопрос</option>
+                <option value="order">Проблема с заказом</option>
+                <option value="payment">Оплата</option>
+                <option value="other">Другое</option>
+            </select>
+
+            <label for="text" id="label-text">Сообщение</label>
+            <textarea id="text" rows="5" required></textarea>
+
+            <button onclick="submitForm()" id="submit-btn">Отправить</button>
+        </div>
+
+        <div id="success-box" class="success" style="display: none;"></div>
+    </div>
+
+    <script>
+        const translations = {
+            en: {
+                title: "Contact Us",
+                email: "Email",
+                category: "Category",
+                text: "Message",
+                send: "Send",
+                categories: {
+                    general: "General Inquiry",
+                    order: "Order Issue",
+                    payment: "Payment",
+                    other: "Other"
+                },
+                success: (ticket) => `✅ Thank you! Your request has been received. Ticket number: ${ticket}`,
+                errors: {
+                    fillAll: "Please fill in all fields.",
+                    invalidEmail: "Please enter a valid email address.",
+                    submitFail: "Submission failed. Try again.",
+                    submitError: "Error submitting form."
+                }
+            },
+            ru: {
+                title: "Связаться с нами",
+                email: "Эл. почта",
+                category: "Категория",
+                text: "Сообщение",
+                send: "Отправить",
+                categories: {
+                    general: "Общий вопрос",
+                    order: "Проблема с заказом",
+                    payment: "Оплата",
+                    other: "Другое"
+                },
+                success: (ticket) => `✅ Спасибо! Ваш запрос получен. Номер обращения: ${ticket}`,
+                errors: {
+                    fillAll: "Пожалуйста, заполните все поля.",
+                    invalidEmail: "Пожалуйста, введите корректный адрес электронной почты.",
+                    submitFail: "Отправка не удалась. Попробуйте еще раз.",
+                    submitError: "Ошибка при отправке формы."
+                }
+            },
+            kz: {
+                title: "Байланыс",
+                email: "Электрондық пошта",
+                category: "Санат",
+                text: "Хабарлама",
+                send: "Жіберу",
+                categories: {
+                    general: "Жалпы сұрақ",
+                    order: "Тапсырыс мәселесі",
+                    payment: "Төлеу",
+                    other: "Басқа"
+                },
+                success: (ticket) => `✅ Рақмет! Сұрағыңыз қабылданды. Билет нөмірі: ${ticket}`,
+                errors: {
+                    fillAll: "Барлық өрістерді толтырыңыз.",
+                    invalidEmail: "Дұрыс электрондық пошта мекенжайын енгізіңіз.",
+                    submitFail: "Жіберу сәтсіз аяқталды. Қайта көріңіз.",
+                    submitError: "Форманы жіберу кезінде қате."
+                }
+            }
+        };
+
+        let lang = 'ru';
+
+        document.getElementById('lang').addEventListener('change', (e) => {
+            lang = e.target.value;
+            updateLang();
+        });
+
+        function updateLang() {
+            const t = translations[lang];
+            document.getElementById('title').innerText = t.title;
+            document.getElementById('label-email').innerText = t.email;
+            document.getElementById('label-category').innerText = t.category;
+            document.getElementById('label-text').innerText = t.text;
+            document.getElementById('submit-btn').innerText = t.send;
+
+            const category = document.getElementById('category');
+            category.options[0].text = t.categories.general;
+            category.options[1].text = t.categories.order;
+            category.options[2].text = t.categories.payment;
+            category.options[3].text = t.categories.other;
+        }
+
+        async function submitForm() {
+            const email = document.getElementById('email').value.trim();
+            const category = document.getElementById('category').value;
+            const text = document.getElementById('text').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const t = translations[lang].errors;
+
+            if (!email || !category || !text) {
+                alert(t.fillAll);
+                return;
+            }
+
+            if (!emailRegex.test(email)) {
+                alert(t.invalidEmail);
+                return;
+            }
+
+            try {
+                const res = await fetch("https://91f615595b2c.ngrok-free.app/api/support/public-create", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, category, text })
+                });
+
+                const data = await res.json();
+
+                if (data.ticket && data.ticket.ticket_number) {
+                    document.getElementById('form-box').style.display = 'none';
+                    document.getElementById('success-box').style.display = 'block';
+                    document.getElementById('success-box').innerText = translations[lang].success(data.ticket.ticket_number);
+                } else {
+                    alert(t.submitFail);
+                }
+            } catch (err) {
+                console.error(err);
+                alert(t.submitError);
+            }
+        }
+
+        updateLang();
+    </script>
+</body>
+
+</html>

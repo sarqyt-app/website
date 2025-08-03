@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Sarqyt Admin</title>
+  <title>Админ Sarqyt</title>
   <style>
     :root {
-      --primary: #1a73e8;
-      --secondary: #f1f3f4;
-      --text: #202124;
-      --accent: #e8f0fe;
-      --error: #d93025;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      --border-radius: 12px;
+      --primary: #2a4ce4;
+      --secondary: #f4f6f8;
+      --text: #1a1c22;
+      --accent: #e0e7ff;
+      --error: #e63946;
+      --shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      --border-radius: 16px;
+      --gradient: linear-gradient(135deg, #6b7280 0%, #1e3a8a 100%);
     }
 
     * {
@@ -22,56 +23,62 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(135deg, #f8f9fa 0%, #e8ecef 100%);
+      background: var(--gradient);
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 1rem;
+      padding: 1.5rem;
       color: var(--text);
     }
 
     .container {
-      max-width: 700px;
+      max-width: 800px;
       width: 100%;
       background: #fff;
-      padding: 2rem;
+      padding: 2.5rem;
       border-radius: var(--border-radius);
       box-shadow: var(--shadow);
-      animation: fadeIn 0.3s ease-in-out;
+      animation: slideIn 0.4s ease-out;
+      position: relative;
+      overflow: hidden;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     h2 {
-      font-size: 1.75rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
       color: var(--text);
+      position: relative;
+      z-index: 1;
     }
 
     input, button {
       width: 100%;
-      padding: 0.75rem;
-      margin: 0.5rem 0;
-      border-radius: 8px;
+      padding: 1rem;
+      margin: 0.75rem 0;
+      border-radius: 12px;
       font-size: 1rem;
       font-family: inherit;
+      transition: all 0.3s ease;
     }
 
     input {
-      border: 1px solid #dadce0;
-      background: #f8f9fa;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
     }
 
     input:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+      box-shadow: 0 0 0 4px rgba(42, 76, 228, 0.2);
     }
 
     button {
@@ -79,17 +86,40 @@
       color: white;
       border: none;
       cursor: pointer;
-      font-weight: 500;
-      padding: 0.75rem 1.5rem;
-      transition: background 0.2s, transform 0.1s;
+      font-weight: 600;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
     }
 
     button:hover {
-      background: #1557b0;
-      transform: translateY(-1px);
+      background: #1e40af;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(42, 76, 228, 0.3);
     }
 
     button:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .nav-button {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      padding: 0.75rem 1.5rem;
+      font-weight: 500;
+    }
+
+    .nav-button:hover {
+      background: var(--primary);
+      color: white;
       transform: translateY(0);
     }
 
@@ -99,58 +129,62 @@
 
     pre {
       background: #f1f3f4;
-      padding: 1rem;
-      border-radius: 8px;
+      padding: 1.5rem;
+      border-radius: 12px;
       overflow-x: auto;
-      font-size: 0.9rem;
-      margin: 1rem 0;
+      font-size: 0.95rem;
+      margin: 1.5rem 0;
     }
 
     .store-card {
       background: var(--accent);
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      border-left: 4px solid var(--primary);
-      transition: transform 0.2s, box-shadow 0.2s;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      border-left: 5px solid var(--primary);
+      transition: all 0.3s ease;
     }
 
     .store-card:hover {
-      transform: translateY(-2px);
+      transform: translateY(-4px);
       box-shadow: var(--shadow);
     }
 
     .store-card h3 {
-      font-size: 1.25rem;
+      font-size: 1.5rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
     }
 
     .store-card small {
       display: block;
-      color: #5f6368;
-      font-size: 0.9rem;
-      margin-bottom: 0.25rem;
+      color: #6b7280;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
     }
 
     .store-image {
       max-width: 100%;
       height: auto;
-      border-radius: 8px;
-      margin-top: 0.75rem;
+      border-radius: 12px;
+      margin-top: 1rem;
     }
 
     @media (max-width: 600px) {
       .container {
-        padding: 1.5rem;
+        padding: 2rem;
       }
 
       h2 {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
       }
 
       input, button {
         font-size: 0.95rem;
+      }
+
+      .nav-buttons {
+        flex-direction: column;
       }
     }
   </style>
@@ -158,59 +192,83 @@
 <body>
   <!-- Login -->
   <div class="container" id="loginPage">
-    <h2>Admin Login</h2>
-    <input type="text" id="loginUsername" placeholder="Username" />
-    <input type="password" id="loginPassword" placeholder="Password" />
-    <button onclick="handleLogin()">Login</button>
+    <h2>Вход для администратора</h2>
+    <input type="text" id="loginUsername" placeholder="Имя пользователя" />
+    <input type="password" id="loginPassword" placeholder="Пароль" />
+    <button onclick="handleLogin()">Войти</button>
+    <div class="nav-buttons">
+      <button class="nav-button" onclick="window.location.href='support.html'">Связаться с нами</button>
+      <button class="nav-button" onclick="window.location.href='legal.html'">Юридическая информация</button>
+    </div>
   </div>
 
   <!-- Dashboard -->
   <div class="container hidden" id="dashboardPage">
-    <h2>Dashboard</h2>
-    <button onclick="showAddStore()">Add Store</button>
-    <button onclick="viewAllStores()">View All Stores</button>
-    <button onclick="showStoreLookup('view')">View Store</button>
-    <button onclick="showStoreLookup('edit')">Edit Store</button>
+    <h2>Панель управления</h2>
+    <button onclick="showAddStore()">Добавить магазин</button>
+    <button onclick="viewAllStores()">Просмотреть все магазины</button>
+    <button onclick="showStoreLookup('view')">Просмотреть магазин</button>
+    <button onclick="showStoreLookup('edit')">Редактировать магазин</button>
+    <div class="nav-buttons">
+      <button class="nav-button" onclick="window.location.href='contact.html'">Связаться с нами</button>
+      <button class="nav-button" onclick="window.location.href='legal.html'">Юридическая информация</button>
+    </div>
   </div>
 
   <!-- View All Stores -->
   <div class="container hidden" id="viewAllStoresPage">
-    <h2>All Stores</h2>
+    <h2>Все магазины</h2>
     <div id="storesList"></div>
-    <button onclick="goBackToDashboard()">Back to Dashboard</button>
+    <button onclick="goBackToDashboard()">Назад к панели управления</button>
+    <div class="nav-buttons">
+      <button class="nav-button" onclick="window.location.href='contact.html'">Связаться с нами</button>
+      <button class="nav-button" onclick="window.location.href='legal.html'">Юридическая информация</button>
+    </div>
   </div>
 
   <!-- Add Store -->
   <div class="container hidden" id="addStorePage">
-    <h2>Add Store</h2>
-    <input type="text" id="name" placeholder="Store Name" />
-    <input type="text" id="address" placeholder="Address" />
-    <input type="text" id="username" placeholder="Username" />
-    <input type="password" id="password_hash" placeholder="Password" />
-    <input type="text" id="contact_info" placeholder="Contact Info" />
-    <input type="text" id="coordinates_lat" placeholder="Latitude" />
-    <input type="text" id="coordinates_lon" placeholder="Longitude" />
-    <button onclick="submitStore()">Create Store</button>
-    <button onclick="goBackToDashboard()">Back</button>
+    <h2>Добавить магазин</h2>
+    <input type="text" id="name" placeholder="Название магазина" />
+    <input type="text" id="address" placeholder="Адрес" />
+    <input type="text" id="username" placeholder="Имя пользователя" />
+    <input type="password" id="password_hash" placeholder="Пароль" />
+    <input type="text" id="contact_info" placeholder="Контактная информация" />
+    <input type="text" id="coordinates_lat" placeholder="Широта" />
+    <input type="text" id="coordinates_lon" placeholder="Долгота" />
+    <button onclick="submitStore()">Создать магазин</button>
+    <button onclick="goBackToDashboard()">Назад</button>
+    <div class="nav-buttons">
+      <button class="nav-button" onclick="window.location.href='contact.html'">Связаться с нами</button>
+      <button class="nav-button" onclick="window.location.href='legal.html'">Юридическая информация</button>
+    </div>
   </div>
 
   <!-- Store Lookup -->
   <div class="container hidden" id="lookupPage">
-    <h2 id="lookupTitle">Store Lookup</h2>
-    <input type="text" id="lookupUsername" placeholder="Enter Store Username" />
-    <button onclick="submitLookup()">Submit</button>
-    <button onclick="goBackToDashboard()">Back</button>
+    <h2 id="lookupTitle">Поиск магазина</h2>
+    <input type="text" id="lookupUsername" placeholder="Введите имя пользователя магазина" />
+    <button onclick="submitLookup()">Отправить</button>
+    <button onclick="goBackToDashboard()">Назад</button>
     <div id="lookupResult"></div>
+    <div class="nav-buttons">
+      <button class="nav-button" onclick="window.location.href='contact.html'">Связаться с нами</button>
+      <button class="nav-button" onclick="window.location.href='legal.html'">Юридическая информация</button>
+    </div>
   </div>
 
   <!-- Edit Store -->
   <div class="container hidden" id="editStorePage">
-    <h2>Edit Store</h2>
-    <input type="text" id="edit_name" placeholder="New Store Name" />
-    <input type="text" id="edit_address" placeholder="New Address" />
-    <input type="text" id="edit_contact_info" placeholder="New Contact Info" />
-    <button onclick="submitEdit()">Save Changes</button>
-    <button onclick="goBackToDashboard()">Back</button>
+    <h2>Редактировать магазин</h2>
+    <input type="text" id="edit_name" placeholder="Новое название магазина" />
+    <input type="text" id="edit_address" placeholder="Новый адрес" />
+    <input type="text" id="edit_contact_info" placeholder="Новая контактная информация" />
+    <button onclick="submitEdit()">Сохранить изменения</button>
+    <button onclick="goBackToDashboard()">Назад</button>
+    <div class="nav-buttons">
+      <button class="nav-button" onclick="window.location.href='contact.html'">Связаться с нами</button>
+      <button class="nav-button" onclick="window.location.href='legal.html'">Юридическая информация</button>
+    </div>
   </div>
 
   <script>
@@ -232,9 +290,9 @@
           document.getElementById('loginPage').classList.add('hidden');
           document.getElementById('dashboardPage').classList.remove('hidden');
         } else {
-          alert('Login failed');
+          alert('Ошибка входа');
         }
-      }).catch(err => alert('Error logging in: ' + err.message));
+      }).catch(err => alert('Ошибка входа: ' + err.message));
     }
 
     function goBackToDashboard() {
@@ -265,12 +323,12 @@
       }).then(res => res.json())
         .then(data => {
           if (data.store) {
-            alert('Store created!');
+            alert('Магазин создан!');
             goBackToDashboard();
           } else {
-            alert('Error: ' + (data.error || 'Unknown error'));
+            alert('Ошибка: ' + (data.error || 'Неизвестная ошибка'));
           }
-        }).catch(err => alert('Error creating store: ' + err.message));
+        }).catch(err => alert('Ошибка создания магазина: ' + err.message));
     }
 
     function viewAllStores() {
@@ -285,19 +343,19 @@
           container.innerHTML = '';
 
           if (!stores.length) {
-            container.innerHTML = '<p>No stores found.</p>';
+            container.innerHTML = '<p>Магазины не найдены.</p>';
           } else {
             stores.forEach(store => {
               const card = document.createElement('div');
               card.className = 'store-card';
               card.innerHTML = `
                 <h3>${store.name}</h3>
-                <small><strong>Username:</strong> ${store.username}</small><br />
-                <small><strong>Address:</strong> ${store.address}</small><br />
-                <small><strong>Contact:</strong> ${store.contact_info}</small><br />
-                <small><strong>Coordinates:</strong> ${store.coordinates_lat}, ${store.coordinates_lon}</small><br />
-                <small><strong>Created:</strong> ${new Date(store.created_at).toLocaleString()}</small><br />
-                ${store.image_urls ? `<img class="store-image" src="${store.image_urls}" alt="${store.name} logo">` : ''}
+                <small><strong>Имя пользователя:</strong> ${store.username}</small><br />
+                <small><strong>Адрес:</strong> ${store.address}</small><br />
+                <small><strong>Контакты:</strong> ${store.contact_info}</small><br />
+                <small><strong>Координаты:</strong> ${store.coordinates_lat}, ${store.coordinates_lon}</small><br />
+                <small><strong>Создан:</strong> ${new Date(store.created_at).toLocaleString('ru-RU')}</small><br />
+                ${store.image_urls ? `<img class="store-image" src="${store.image_urls}" alt="Логотип ${store.name}">` : ''}
               `;
               container.appendChild(card);
             });
@@ -307,8 +365,8 @@
           document.getElementById('viewAllStoresPage').classList.remove('hidden');
         })
         .catch(err => {
-          console.error('Fetch error:', err);
-          alert('Error fetching stores: ' + err.message);
+          console.error('Ошибка загрузки:', err);
+          alert('Ошибка получения магазинов: ' + err.message);
         });
     }
 
@@ -316,7 +374,7 @@
       lookupMode = mode;
       document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
       document.getElementById('lookupPage').classList.remove('hidden');
-      document.getElementById('lookupTitle').innerText = mode === 'edit' ? 'Edit Store' : 'View Store';
+      document.getElementById('lookupTitle').innerText = mode === 'edit' ? 'Редактировать магазин' : 'Просмотреть магазин';
     }
 
     function submitLookup() {
@@ -337,12 +395,12 @@
             result.innerHTML = `
               <div class="store-card">
                 <h3>${store.name}</h3>
-                <small><strong>Username:</strong> ${store.username}</small><br />
-                <small><strong>Address:</strong> ${store.address}</small><br />
-                <small><strong>Contact:</strong> ${store.contact_info}</small><br />
-                <small><strong>Coordinates:</strong> ${store.coordinates_lat}, ${store.coordinates_lon}</small><br />
-                <small><strong>Created:</strong> ${new Date(store.created_at).toLocaleString()}</small><br />
-                ${store.image_urls ? `<img class="store-image" src="${store.image_urls}" alt="${store.name} logo">` : ''}
+                <small><strong>Имя пользователя:</strong> ${store.username}</small><br />
+                <small><strong>Адрес:</strong> ${store.address}</small><br />
+                <small><strong>Контакты:</strong> ${store.contact_info}</small><br />
+                <small><strong>Координаты:</strong> ${store.coordinates_lat}, ${store.coordinates_lon}</small><br />
+                <small><strong>Создан:</strong> ${new Date(store.created_at).toLocaleString('ru-RU')}</small><br />
+                ${store.image_urls ? `<img class="store-image" src="${store.image_urls}" alt="Логотип ${store.name}">` : ''}
               </div>
             `;
           } else {
@@ -354,7 +412,7 @@
             document.getElementById('editStorePage').classList.remove('hidden');
           }
         })
-        .catch(err => alert('Error fetching store: ' + err.message));
+        .catch(err => alert('Ошибка получения магазина: ' + err.message));
     }
 
     function submitEdit() {
@@ -371,12 +429,12 @@
       }).then(res => res.json())
         .then(data => {
           if (data.store) {
-            alert('Store updated!');
+            alert('Магазин обновлен!');
             goBackToDashboard();
           } else {
-            alert('Update failed: ' + (data.error || 'Unknown error'));
+            alert('Ошибка обновления: ' + (data.error || 'Неизвестная ошибка'));
           }
-        }).catch(err => alert('Error updating store: ' + err.message));
+        }).catch(err => alert('Ошибка обновления магазина: ' + err.message));
     }
   </script>
 </body>
